@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Support\Str;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -48,6 +49,10 @@ class ProjectController extends Controller
         $validated_data["slug"] = Str::slug($validated_data["title"], "-");
 
         $newProject = Project::create($validated_data);
+
+        if ($request->has("technologies")) {
+            $newProject->technologies()->attach($request->technologies);
+        }
 
         return redirect()->route("admin.projects.show", ["project" => $newProject->slug]);
     }
