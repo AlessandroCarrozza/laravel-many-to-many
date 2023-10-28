@@ -96,7 +96,12 @@ class ProjectController extends Controller
 
         $project->update($validated_data);
 
-        return redirect()->route("admin.projects.show", ["project" => $project->slug]);
+        if ($request->has("technologies")) {
+            $selectedTechnologies = $request->input("technologies");
+            $project->technologies()->sync($selectedTechnologies);
+        }
+
+        return redirect()->route("admin.projects.index", ["project" => $project->slug]);
     }
 
     /**

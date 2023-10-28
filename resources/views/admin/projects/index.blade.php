@@ -9,6 +9,7 @@
         <th scope="col">Titolo</th>
         <th scope="col">Slug</th>
         <th scope="col">Tipo</th> 
+        <th scope="col">Tech</th> 
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -19,6 +20,11 @@
         <th scope="row">{{$project->title}}</th>
         <td>{{$project->slug}}</td>
         <td>{{$project->type?->name}}</td>
+        <td>
+          @foreach ($project->technologies as $technology)
+          <span class="badge rounded-pill text-bg-secondary p-1">{{$technology->name}}</span>
+          @endforeach
+        </td>
         <td class="d-flex">
             <a href="{{route("admin.projects.show", ["project" => $project->slug])}}" type="button" class="btn btn-primary m-1">Vedi</a>
             <a href="{{route("admin.projects.edit", ["project" => $project->slug])}}" type="button" class="btn btn-warning m-1">Modifica</a>
